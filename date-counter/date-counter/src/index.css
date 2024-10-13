@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.counter{
+  margin: 0px auto;
+  width: 700px;
+  text-align: center;
+  padding: 5px;
+
+  align-items: center;
+  padding: 100px auto;
+}
+
+.counter div{
+  padding: 5px;
+}
+
+button {
+  margin:10px;
+}

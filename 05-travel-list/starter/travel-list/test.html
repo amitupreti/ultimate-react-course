@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Dancing on Beach</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="beachCanvas"></canvas>
+    <script>
+     const canvas = document.getElementById('beachCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let catX = canvas.width / 2;
+let catY = canvas.height - 100;
+let waveOffset = 0;
+let stickManX = canvas.width / 4;
+let stickManY = canvas.height - 100;
+let stickManFrame = 0;
+
+function drawBeach() {
+    ctx.fillStyle = 'sandybrown';
+    ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2);
+}
+
+function drawSea() {
+    ctx.fillStyle = 'lightblue';
+    ctx.fillRect(0, 0, canvas.width, canvas.height / 2);
+}
+
+function drawWaves() {
+    ctx.fillStyle = 'blue';
+    ctx.beginPath();
+    for (let i = 0; i < canvas.width; i += 20) {
+        ctx.lineTo(i, canvas.height / 2 + 10 * Math.sin((i + waveOffset) * 0.05));
+    }
+    ctx.lineTo(canvas.width, canvas.height / 2);
+    ctx.lineTo(0, canvas.height / 2);
+    ctx.fill();
+}
+
+function drawCat() {
+    ctx.fillStyle = 'gray';
+    
+    // Draw body
+    ctx.fillRect(catX, catY, 50, 30);
+    
+    // Draw head
+    ctx.beginPath();
+    ctx.arc(catX + 25, catY - 10, 15, 0, Math.PI * 2, true);
+    ctx.fill();
+    
+    // Draw ears
+    ctx.beginPath();
+    ctx.moveTo(catX + 15, catY - 10);
+    ctx.lineTo(catX + 20, catY - 25);
+    ctx.lineTo(catX + 25, catY - 10);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.moveTo(catX + 35, catY - 10);
+    ctx.lineTo(catX + 30, catY - 25);
+    ctx.lineTo(catX + 25, catY - 10);
+    ctx.fill();
+    
+    // Draw eyes
+    ctx.fillStyle = 'white';
+    ctx.beginPath();
+    ctx.arc(catX + 20, catY - 15, 3, 0, Math.PI * 2, true);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.arc(catX + 30, catY - 15, 3, 0, Math.PI * 2, true);
+    ctx.fill();
+    
+    // Draw pupils
+    ctx.fillStyle = 'black';
+    ctx.beginPath();
+    ctx.arc(catX + 20, catY - 15, 1, 0, Math.PI * 2, true);
+    ctx.fill();
+    
+    ctx.beginPath();
+    ctx.arc(catX + 30, catY - 15, 1, 0, Math.PI * 2, true);
+    ctx.fill();
+    
+    // Draw tail
+    ctx.beginPath();
+    ctx.moveTo(catX + 50, catY + 10);
+    ctx.lineTo(catX + 70, catY - 10);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = 'gray';
+    ctx.stroke();
+    ctx.lineWidth = 1;
+}
+
+function drawStickMan() {
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+
+    // Draw head
+    ctx.beginPath();
+    ctx.arc(stickManX, stickManY - 30, 10, 0, Math.PI * 2, true);
+    ctx.stroke();
+
+    // Draw body
+    ctx.beginPath();
+    ctx.moveTo(stickManX, stickManY - 20);
+    ctx.lineTo(stickManX, stickManY + 20);
+    ctx.stroke();
+
+    // Draw arms
+    ctx.beginPath();
+    ctx.moveTo(stickManX, stickManY);
+    ctx.lineTo(stickManX - 20 + 10 * Math.sin(stickManFrame * 0.1), stickManY - 10);
+    ctx.moveTo(stickManX, stickManY);
+    ctx.lineTo(stickManX + 20 - 10 * Math.sin(stickManFrame * 0.1), stickManY - 10);
+    ctx.stroke();
+
+    // Draw legs
+    ctx.beginPath();
+    ctx.moveTo(stickManX, stickManY + 20);
+    ctx.lineTo(stickManX - 10 + 10 * Math.sin(stickManFrame * 0.1), stickManY + 40);
+    ctx.moveTo(stickManX, stickManY + 20);
+    ctx.lineTo(stickManX + 10 - 10 * Math.sin(stickManFrame * 0.1), stickManY + 40);
+    ctx.stroke();
+}
+
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawSea();
+    drawWaves();
+    drawBeach();
+    drawCat();
+    drawStickMan();
+
+    waveOffset += 1;
+    catX -= 0.5;
+    stickManFrame += 1;
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+    </script>
+</body>
+</html>
