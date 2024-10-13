@@ -39,10 +39,16 @@ export function TipCalculator() {
           How did your friend like the service?
         </TipSelector>
       </div>
-      <div className="container">
-        <BillSummary>{`You pay $${totalAmount} ($${billAmount} + $${averageTipAmount} or ${averageTipPercentage}% tip)`}</BillSummary>
-        <Reset handleOnReset={handleReset}>Reset</Reset>
-      </div>
+      {billAmount > 0 ? (
+        <div className="container">
+          <BillSummary>{`You pay $${totalAmount} ($${billAmount} + $${averageTipAmount} or ${averageTipPercentage}% tip)`}</BillSummary>
+          <Reset handleOnReset={handleReset}>Reset</Reset>
+        </div>
+      ) : (
+        <div className="container">
+          <BillSummary>{`Please add bill amount`}</BillSummary>
+        </div>
+      )}
     </>
   );
 }
