@@ -1,11 +1,7 @@
 import { useState } from "react";
+import { Button } from "./Button";
 
-export function SplitBill({
-  selectedFriend,
-  handleUpdateBalance,
-  handleSetSplitFormOpen,
-  handleSetCurrentSplitFriend,
-}) {
+export function SplitBill({ selectedFriend, handleUpdateBalance }) {
   const friendName = selectedFriend.name;
 
   const [bill, setBill] = useState(0);
@@ -27,12 +23,14 @@ export function SplitBill({
         newBalance = existingBalance - selfExpense;
       }
       handleUpdateBalance(newBalance, selectedFriend.id);
-      setBill(0);
-      setSelfExpense(0);
-      setpaidBy("self");
-      handleSetSplitFormOpen(false);
-      handleSetCurrentSplitFriend(null);
+      resetComponent();
     }
+  }
+
+  function resetComponent() {
+    setBill(0);
+    setSelfExpense(0);
+    setpaidBy("self");
   }
 
   return (
@@ -73,9 +71,8 @@ export function SplitBill({
         <option value="self">You</option>
         <option value="friend">{friendName}</option>
       </select>
-      <button className="button" onClick={handleSubmit}>
-        Split Bill
-      </button>
+
+      <Button onClickHandler={handleSubmit}>Split Bill</Button>
     </form>
   );
 }

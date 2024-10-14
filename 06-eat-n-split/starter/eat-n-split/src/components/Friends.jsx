@@ -3,10 +3,8 @@ import { Friend } from "./Friend";
 
 export function Friends({
   friendList,
-  handleSetSplitFormOpen,
   handleSetCurrentSplitFriend,
   currentSplitFriend,
-  handleSetAddFriendFormOpen,
 }) {
   return (
     <>
@@ -15,10 +13,8 @@ export function Friends({
           <Friend
             data={friend}
             key={friend.id}
-            handleSetSplitFormOpen={handleSetSplitFormOpen}
             handleSetCurrentSplitFriend={handleSetCurrentSplitFriend}
             currentSplitFriend={currentSplitFriend}
-            handleSetAddFriendFormOpen={handleSetAddFriendFormOpen}
           />
         ))}
       </ul>

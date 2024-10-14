@@ -1,12 +1,13 @@
 import { useState } from "react";
+import { Button } from "./Button";
 
 export function Friend({
   data,
-  handleSetSplitFormOpen,
   handleSetCurrentSplitFriend,
   currentSplitFriend,
-  handleSetAddFriendFormOpen,
 }) {
+  const isSelected = currentSplitFriend?.id === data.id;
+
   let message = "";
   const status = data.balance === 0 ? "" : data.balance < 0 ? "red" : "green";
   if (status === "red") {
@@ -16,29 +17,23 @@ export function Friend({
   } else {
     message = `You and ${data.name} are even`;
   }
-  const buttonMessage = currentSplitFriend !== data.id ? "Select" : "Close";
+  const buttonMessage = isSelected ? "Close" : "Select";
 
-  function handleSplitBill(e) {
-    const buttonText = e.target.innerHTML;
-    if (buttonText === "Select") {
-      handleSetSplitFormOpen(true);
-      handleSetCurrentSplitFriend(data.id);
-    } else {
-      handleSetSplitFormOpen(false);
-      handleSetCurrentSplitFriend(null);
-    }
-    handleSetAddFriendFormOpen(false);
-  }
   return (
     <>
-      <li>
+      <li className={isSelected ? "selected" : ""}>
         <img src={data.image} alt={data.name} />
 
         <h3>{data.name}</h3>
         <p className={status}>{message}</p>
-        <button className="button" onClick={handleSplitBill}>
+
+        <Button
+          onClickHandler={() => {
+            handleSetCurrentSplitFriend(isSelected ? null : data);
+          }}
+        >
           {buttonMessage}
-        </button>
+        </Button>
       </li>
     </>
   );

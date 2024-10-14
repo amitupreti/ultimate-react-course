@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-export function AddFriend({ setAddFriendFormOpen, onAddFriend }) {
+import { Button } from "./Button";
+
+export function AddFriend({ onAddFriend }) {
   const randomNum = Math.round(Math.random() * 10000000);
 
   const [name, setName] = useState("");
@@ -13,7 +15,7 @@ export function AddFriend({ setAddFriendFormOpen, onAddFriend }) {
     }
 
     setName("");
-    setUrl("");
+    setUrl("https://i.pravatar.cc/48");
     onAddFriend({
       id: randomNum,
       name: name,
@@ -38,18 +40,9 @@ export function AddFriend({ setAddFriendFormOpen, onAddFriend }) {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
         />
-        <button className="button" onClick={onSubmitHandler}>
-          Add
-        </button>
+
+        <Button onClickHandler={onSubmitHandler}>Add</Button>
       </form>
-      <button
-        className="button"
-        onClick={() => {
-          setAddFriendFormOpen(false);
-        }}
-      >
-        Close
-      </button>
     </>
   );
 }

@@ -5,6 +5,7 @@ import { Friends } from './components/Friends';
 import { AddFriend } from './components/AddFriend';
 import { SplitBill } from './components/SplitBill';
 import { useState } from 'react';
+import { Button } from "./components/Button";
 
 const initialFriends = [
   {
@@ -45,38 +46,45 @@ function App() {
     setAddFriendFormOpen(false)
   }
 
-  function handleUpdateBalance(newBalance, friendId) {
+  function handleUpdateBalance(newBalance) {
     setFriendList(() => friendList.map((friend) => {
-      friend.balance = friend.id === friendId ? newBalance : friend.balance
+      friend.balance = friend.id === currentSplitFriend.id ? newBalance : friend.balance
       return friend
     }))
 
+    setSplitFormOpen(false);
+    setCurrentSplitFriend(null);
 
   }
+  function handleSetCurrentSplitFriend(friend) {
+    setSplitFormOpen(friend !== null)
+    setCurrentSplitFriend(friend)
+    setAddFriendFormOpen(false)
+  }
+
+
 
   return <>
     <div className='app'>
       <div className='sidebar'>
         <Friends
           friendList={friendList}
-          handleSetSplitFormOpen={setSplitFormOpen}
-          handleSetCurrentSplitFriend={setCurrentSplitFriend}
+          handleSetCurrentSplitFriend={handleSetCurrentSplitFriend}
           currentSplitFriend={currentSplitFriend}
-          handleSetAddFriendFormOpen={setAddFriendFormOpen}
         />
         {
-          addFriendFormOpen ?
-            <AddFriend onAddFriend={addFriendHandler} setAddFriendFormOpen={setAddFriendFormOpen} /> :
-            <button className='button' onClick={() => setAddFriendFormOpen(true)}>Add Friend</button>
+          addFriendFormOpen &&
+          <AddFriend onAddFriend={addFriendHandler} />
+        }
+        {
+          <Button onClickHandler={() => setAddFriendFormOpen(() => !addFriendFormOpen)}>{addFriendFormOpen ? "Close" : "Add Friend"}</Button>
         }
       </div>
       {
         splitFormOpen &&
         <SplitBill onClickCloseForm={setSplitFormOpen}
-          selectedFriend={friendList.filter((friend) => friend.id === currentSplitFriend)[0]}
+          selectedFriend={currentSplitFriend}
           handleUpdateBalance={handleUpdateBalance}
-          handleSetSplitFormOpen={setSplitFormOpen}
-          handleSetCurrentSplitFriend={setCurrentSplitFriend}
 
         />}
 
